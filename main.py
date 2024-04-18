@@ -29,7 +29,6 @@ class Apple:
     def move(self):
         self.x = random.randint(2,X_Blocks-2) * BLOCK_SIZE
         self.y = random.randint(2,Y_Blocks-2) * BLOCK_SIZE
-        print('3')
 
 class Snake:
     def __init__(self, parent_screen):
@@ -37,8 +36,8 @@ class Snake:
         self.image = pygame.image.load("resources/block.jpg").convert()
         self.direction = 'down'
         self.length = 1
-        self.x = [40]
-        self.y = [40]
+        self.x = [BLOCK_SIZE]
+        self.y = [BLOCK_SIZE]
         # self.speed = 0.25  # Speed increase factor
 
     def move_left(self):
@@ -138,7 +137,7 @@ class Game:
         # Snake eating apple
         if self.is_collision(self.snake.x[0], self.snake.y[0], self.apple.x, self.apple.y):
             self.play_sound("ding")
-            self.speed += 1
+            self.speed += (self.snake.length // 4)
             self.snake.increase_length()
             self.apple.move()
             
@@ -157,9 +156,9 @@ class Game:
             raise Exception("Collision Occurred")
 
     def display_score(self):
-        font = pygame.font.SysFont('arial', 30)
-        score = font.render(f"Score: {self.snake.length}", True, (200, 200, 200))
-        self.surface.blit(score, (850, 10))
+        font = pygame.font.SysFont('san-serif', 20)
+        score = font.render(f"Score: {self.snake.length}", True, (0,0,0))
+        self.surface.blit(score, (WINDOW_WIDTH-100, 10))
 
     def show_game_over(self):
         # self.render_background()
